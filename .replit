@@ -1,6 +1,4 @@
 run = "php artisan serve --host 0.0.0.0 --port $PORT"
-[packager]
-afterInstall = "php artisan migrate"
 [nix]
 channel = "stable-23_11"
 [entrypoint]
