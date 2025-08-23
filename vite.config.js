@@ -4,13 +4,11 @@ import laravel from 'laravel-vite-plugin';
 export default defineConfig({
     server: {
         hmr: {
-            host: process.env.REPL_SLUG
-                ? `${process.env.REPL_SLUG}.${process.env.REPL_OWNER}.replit.dev`
-                : 'localhost',
+            host: 'b9ba92a5-b947-42b7-8f51-da6c7a7eed71-00-3ccxgzfs6cyrv.sisko.replit.dev',
             clientPort: 443,
         },
         host: '0.0.0.0',
-        allowedHosts: ['all'], // السماح لأي دومين (ديناميكي)
+        allowedHosts: ['b9ba92a5-b947-42b7-8f51-da6c7a7eed71-00-3ccxgzfs6cyrv.sisko.replit.dev'], // السماح لأي دومين (ديناميكي)
     },
     plugins: [
         laravel({

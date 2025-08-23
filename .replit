@@ -1,10 +1,3 @@
-run = "php artisan serve --host 0.0.0.0 --port $PORT"
+run = "php artisan serve --host 0.0.0.0 --port $PORT & php artisan queue:work --daemon & php artisan schedule:run"
 [nix]
-channel = "stable-23_11"
-[entrypoint]
-run = "php artisan queue:work --daemon"
-[cron]
-schedule = "*/1 * * * *"
-command = "php artisan schedule:run"
-[ports]
-port = "8080"
+channel = "stable-25_05"
