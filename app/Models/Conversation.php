@@ -62,4 +62,8 @@ class Conversation extends Model
             ->withMax('messages', 'created_at')
             ->orderBy('messages_max_created_at');
     }
+    public function users()
+{
+    return $this->belongsToMany(User::class, 'conversation_user')->withTimestamps();
+}
 }
