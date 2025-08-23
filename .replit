@@ -6,3 +6,5 @@ run = "php artisan queue:work --daemon"
 [cron]
 schedule = "*/1 * * * *"
 command = "php artisan schedule:run"
+[ports]
+port = "8080"
