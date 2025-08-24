@@ -1,39 +1,36 @@
-# Use a simple and official PHP 8.2 base image
-FROM php:8.2-cli
+# Stage 1: Build the base image
+FROM php:8.2-fpm-alpine as base
 
-# Set the working directory inside the container
-WORKDIR /var/www/html
+# Install system dependencies and tools
+RUN apk add --no-cache \
+    nginx \
+    git \
+    supervisor \
+    # Install PHP extensions
+    && docker-php-ext-install pdo pdo_pgsql zip bcmath
 
-# Install necessary system dependencies for Laravel and PostgreSQL
-RUN apt-get update && apt-get install -y \
-    zip \
-    unzip \
-    libpq-dev \
-    && apt-get clean
-
-# Install required PHP extensions
-RUN docker-php-ext-install pdo pdo_pgsql bcmath
-
-# Install Composer (the PHP package manager)
+# Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy all your application files into the container
-COPY . .
+# Copy application files
+COPY . /var/www/html
 
-# Install composer dependencies
-# This command also runs 'php artisan package:discover'
-RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+# Set working directory
+WORKDIR /var/www/html
 
-# Generate the application key
-RUN php artisan key:generate
+# Install Composer dependencies
+RUN composer install --no-dev --optimize-autoloader
 
-# Set the correct permissions for storage and cache folders
-RUN chown -R www-data:www-data storage bootstrap/cache
-RUN chmod -R 775 storage bootstrap/cache
+# Set correct permissions
+RUN chown -R www-data:www-data /var/www/html
+RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Expose the port that Render will use to communicate with your app
-EXPOSE 10000
+# Expose the web server port
+EXPOSE 8000
 
-# The final command to run when the container starts.
-# It first runs database migrations and then starts the web server.
-CMD php artisan migrate --force && php artisan serve --host 0.0.0.0 --port 10000
+# Copy Nginx and Supervisor configurations
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY supervisord.conf /etc/supervisord.conf
+
+# Final command to run
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
