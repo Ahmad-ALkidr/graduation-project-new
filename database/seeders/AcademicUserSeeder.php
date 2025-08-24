@@ -20,7 +20,7 @@ class AcademicUserSeeder extends Seeder
             'email' => 'ahmadalkhder2002g.2@gmail.com', // بريدك الإلكتروني
             'password' => Hash::make('password'), // كلمة مرور افتراضية
             'role' => 'academic',
-            'status' => 1,
+            'status' => true,
         ]);
 
         // حسابات أكاديمية وهمية إضافية
@@ -30,7 +30,7 @@ class AcademicUserSeeder extends Seeder
             'email' => 'fatima.ali@example.com',
             'password' => Hash::make('password'),
             'role' => 'academic',
-            'status' => 1,
+            'status' => true,
         ]);
 
         User::create([
@@ -39,7 +39,7 @@ class AcademicUserSeeder extends Seeder
             'email' => 'youssef.mahmoud@example.com',
             'password' => Hash::make('password'),
             'role' => 'academic',
-            'status' => 1,
+            'status' => true,
         ]);
     }
 }
