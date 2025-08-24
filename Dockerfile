@@ -6,9 +6,11 @@ RUN apk add --no-cache \
     nginx \
     git \
     supervisor \
-    # Install PostgreSQL client libraries
     libpq-dev \
-    # Other system dependencies as needed
+    # Add libzip-dev and zlib-dev to meet the zip extension requirements
+    libzip-dev \
+    zlib-dev \
+    # Other system dependencies
     && docker-php-ext-install pdo pdo_pgsql zip bcmath
 
 # Install Composer
