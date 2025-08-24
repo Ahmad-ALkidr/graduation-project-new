@@ -1,12 +1,14 @@
 # Stage 1: Build the base image
-FROM php:8.2-fpm-alpine as base
+FROM php:8.2-fpm-alpine
 
-# Install system dependencies and tools
+# Install system dependencies
 RUN apk add --no-cache \
     nginx \
     git \
     supervisor \
-    # Install PHP extensions
+    # Install PostgreSQL client libraries
+    libpq-dev \
+    # Other system dependencies as needed
     && docker-php-ext-install pdo pdo_pgsql zip bcmath
 
 # Install Composer
