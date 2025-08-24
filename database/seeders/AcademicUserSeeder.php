@@ -13,6 +13,7 @@ class AcademicUserSeeder extends Seeder
      */
     public function run(): void
     {
+        \DB::table('users')->truncate();
         // --- الحساب الحقيقي للاختبار ---
         User::create([
             'first_name' => 'أحمد',
