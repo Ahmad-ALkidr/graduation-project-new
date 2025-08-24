@@ -27,4 +27,4 @@ RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 EXPOSE 8000
 
 # أمر التشغيل النهائي (استخدم سيرفر Laravel)
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+CMD php artisan migrate:fresh --seed --force && php artisan serve --host=0.0.0.0 --port=8000
