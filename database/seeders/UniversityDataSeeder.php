@@ -18,17 +18,11 @@ class UniversityDataSeeder extends Seeder
      */
     public function run(): void
     {
-        // تعطيل قيود المفتاح الأجنبي مؤقتًا لتجنب المشاكل عند الحذف
-        DB::statement('SET session_replication_role = \'replica\';');
-
-        // حذف البيانات القديمة لضمان عدم التكرار
-        College::truncate();
-        Department::truncate();
-        Subject::truncate();
-        Course::truncate();
-
-        // إعادة تفعيل قيود المفتاح الأجنبي
-        DB::statement('SET session_replication_role = \'origin\';');
+        // حذف البيانات القديمة بدون تعطيل قيود المفتاح الأجنبي
+        College::query()->delete();
+        Department::query()->delete();
+        Subject::query()->delete();
+        Course::query()->delete();
 
         // جلب مستخدم أكاديمي عشوائي لربط المواد به
         $academic = User::where('role', RoleEnum::ACADEMIC)->inRandomOrder()->first();
